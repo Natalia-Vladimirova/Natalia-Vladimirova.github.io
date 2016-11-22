@@ -1,74 +1,100 @@
 'use strict';
 
-window.onload = function() {
-	getNewsCategories();
-	getNews('bbc-news', 'BBC News');
+class Loader {
+	load(requestString) {
+		let request = new Request(requestString);
+		let init = { method: 'GET'};
+
+		return fetch(request, init)
+				.then(response => response.json())
+				.catch(error => console.log('error: ' + error));
+	}
 };
 
-function getNewsCategories(){
-	let categories = document.getElementById('categories');
-	categories.innerHTML = '';
+class Presenter {
+	getHtmlTemplate(path) {
+		return fetch(path)
+				.then(response => response.text())
+				.catch(error => console.log('error: ' + error));
+	}
 
-	let requestString = 'https://newsapi.org/v1/sources';
+	showCategory(category, parent) {
+		this.getHtmlTemplate('templates/category.html')
+			.then(data => {
+				let li = document.createElement('li');
+				li.innerHTML = data
+					.replace(/CATEGORY_ID/, category.id)
+					.replace(/CATEGORY_NAME/g, category.name);
+				parent.appendChild(li);
+			});
+	}
 
-	let request = new Request(requestString);
-	let init = { method: 'GET'};
+	showNews(news, parent) {
+		let description = news.description ? news.description : '';
+		let author = news.author ? 'Author: ' + news.author : '';
+		let publishedAt = news.publishedAt ? 'Published at: ' + news.publishedAt : '';
 
-	fetch(request, init)
-		.then(response => response.json())
-		.then(data => {
-			for (let category of data.sources) {
-				showCategory(category, categories);
+		this.getHtmlTemplate('templates/news.html')
+			.then(data => {
+				let div = document.createElement('div');
+				div.className = 'news';
+				div.innerHTML = data
+					.replace(/NEWS_URL/, news.url)
+					.replace(/NEWS_TITLE/, news.title)
+					.replace(/NEWS_AUTHOR/, author)
+					.replace(/NEWS_PUBLISHEDAT/, publishedAt)
+					.replace(/NEWS_URLTOIMAGE/, news.urlToImage)
+					.replace(/NEWS_DESCRIPTION/, description);
+				parent.appendChild(div);
+			});
+	}
+
+	showCategories(categories) {
+		let allCategories = document.getElementById('categories');
+
+		for (let item of categories.sources) {
+				this.showCategory(item, allCategories);
 			}
-		})
-		.catch(error => console.log('error: ' + error));
+	}
+
+	showAllNews(news, header) {
+		this.getHtmlTemplate('templates/newsHeader.html')
+			.then(data => {
+				let allNews = document.getElementById('allNews');
+				allNews.innerHTML = data.replace(/NEWS_HEADER/, header);
+				
+				for (let item of news.articles) {
+					this.showNews(item, allNews);
+				}
+			});
+	}
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+	getNewsCategories();
+	getNews('bbc-news', 'BBC News');
+});
+
+function getNewsCategories(){
+	let loader = new Loader();
+	let presenter = new Presenter();
+	
+	loader.load('https://newsapi.org/v1/sources')
+		.then(data => {
+			presenter.showCategories(data);
+		});
 }
 
 function getNews(source, categoryName) {
-	let allNews = document.getElementById('allNews');
-	allNews.innerHTML = `<h1>${categoryName}</h1>`;
+	let loader = new Loader();
+	let presenter = new Presenter();
 
 	let apiKey = '8ac8c1098fbe4ec0b3f6e8851facac4a';
 	let requestString = `https://newsapi.org/v1/articles?source=${source}&apiKey=${apiKey}`;
 
-	let request = new Request(requestString);
-	let init = { method: 'GET'};
-
-	fetch(request, init)
-		.then(response => response.json())
+	loader.load(requestString)
 		.then(data => {
-			for (let news of data.articles) {
-				showNews(news, allNews);
-			}
-		})
-		.catch(error => console.log('error: ' + error));
-}
-
-function showNews(news, parent) {
-	let description = news.description ? news.description : '';
-	let author = news.author ? 'Author: ' + news.author : '';
-	let publishedAt = news.publishedAt ? 'Published at: ' + news.publishedAt : '';
-
-	let div = document.createElement('div');
-    div.className = 'news';
-    div.innerHTML = 
-    	`<h3><a href="${news.url}">${news.title}</a></h3>
-    	<h4>${author}</h4>
-    	<h6>${publishedAt}</h6>
-    	<div class="image">
-    		<img src="${news.urlToImage}" alt="no picture">
-    	</div>
-    	<p class="description">${description}</p>`;
-
-	parent.appendChild(div);
-}
-
-function showCategory(category, parent) {
-	let li = document.createElement('li');
-	li.innerHTML = 
-		`<a href='#' onclick="getNews('${category.id}', '${category.name}')">
-			${category.name}
-		</a>`;
-
-	parent.appendChild(li);
+			presenter.showAllNews(data, categoryName);
+		});
 }
