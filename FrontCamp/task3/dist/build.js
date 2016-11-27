@@ -1,7 +1,35 @@
 var newsApp =
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonpnewsApp"];
+/******/ 	window["webpackJsonpnewsApp"] = function webpackJsonpCallback(chunkIds, moreModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, callbacks = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId])
+/******/ 				callbacks.push.apply(callbacks, installedChunks[chunkId]);
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			modules[moduleId] = moreModules[moduleId];
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules);
+/******/ 		while(callbacks.length)
+/******/ 			callbacks.shift().call(null, __webpack_require__);
+
+/******/ 	};
+
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// "0" means "already loaded"
+/******/ 	// Array means "loading", array contains callbacks
+/******/ 	var installedChunks = {
+/******/ 		0:0
+/******/ 	};
 
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -27,6 +55,29 @@ var newsApp =
 /******/ 		return module.exports;
 /******/ 	}
 
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId, callback) {
+/******/ 		// "0" is the signal for "already loaded"
+/******/ 		if(installedChunks[chunkId] === 0)
+/******/ 			return callback.call(null, __webpack_require__);
+
+/******/ 		// an array means "currently loading".
+/******/ 		if(installedChunks[chunkId] !== undefined) {
+/******/ 			installedChunks[chunkId].push(callback);
+/******/ 		} else {
+/******/ 			// start chunk loading
+/******/ 			installedChunks[chunkId] = [callback];
+/******/ 			var head = document.getElementsByTagName('head')[0];
+/******/ 			var script = document.createElement('script');
+/******/ 			script.type = 'text/javascript';
+/******/ 			script.charset = 'utf-8';
+/******/ 			script.async = true;
+
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + ".build.js";
+/******/ 			head.appendChild(script);
+/******/ 		}
+/******/ 	};
 
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -35,7 +86,7 @@ var newsApp =
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "dist/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -55,44 +106,399 @@ var newsApp =
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	exports.getNews = undefined;
 
-	var _loader = __webpack_require__(2);
+	__webpack_require__(2);
 
-	var _presenter = __webpack_require__(3);
+	var _loader = __webpack_require__(6);
+
+	var _categoriesPresenter = __webpack_require__(7);
 
 	document.addEventListener("DOMContentLoaded", function () {
-		getNewsCategories();
-		getNews('bbc-news', 'BBC News');
+	    getNewsCategories();
+	});
+
+	document.getElementById("showNews").addEventListener("click", function () {
+	    getNews('bbc-news', 'BBC News');
 	});
 
 	function getNewsCategories() {
-		var loader = new _loader.Loader();
-		var presenter = new _presenter.Presenter();
+	    var loader = new _loader.Loader();
+	    var presenter = new _categoriesPresenter.CategoriesPresenter();
 
-		loader.load('https://newsapi.org/v1/sources').then(function (data) {
-			presenter.showCategories(data);
-		});
+	    loader.load('https://newsapi.org/v1/sources').then(function (data) {
+	        presenter.showCategories(data);
+	    });
 	}
 
 	function getNews(source, categoryName) {
-		var loader = new _loader.Loader();
-		var presenter = new _presenter.Presenter();
+	    __webpack_require__.e/* nsure */(1, function (require) {
+	        var NewsPresenter = __webpack_require__(9).NewsPresenter;
+	        var newsPresenter = new NewsPresenter();
+	        var loader = new _loader.Loader();
 
-		var apiKey = '8ac8c1098fbe4ec0b3f6e8851facac4a';
-		var requestString = 'https://newsapi.org/v1/articles?source=' + source + '&apiKey=' + apiKey;
+	        var apiKey = '8ac8c1098fbe4ec0b3f6e8851facac4a';
+	        var requestString = 'https://newsapi.org/v1/articles?source=' + source + '&apiKey=' + apiKey;
 
-		loader.load(requestString).then(function (data) {
-			presenter.showAllNews(data, categoryName);
-		});
+	        loader.load(requestString).then(function (data) {
+	            newsPresenter.showAllNews(data, categoryName);
+	        });
+	    });
 	}
 
 	exports.getNews = getNews;
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(3);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(5)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/less-loader/index.js!./app.less", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/less-loader/index.js!./app.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "html,\nbody {\n  height: 100%;\n  margin: 0;\n}\nbody {\n  background-color: #C0C0C0;\n}\np,\nh1,\nh2,\nh3,\nh4,\nh6,\nul {\n  margin: 0;\n}\nh1,\nh2,\nh3 {\n  text-align: center;\n}\nh1,\nh2 {\n  margin-bottom: 5%;\n}\n.button {\n  font-family: cursive, verdana;\n  text-align: center;\n  cursor: pointer;\n  border: solid 2px #C0C0C0;\n  margin: 2%;\n  padding: 1%;\n}\na:hover,\na:visited,\na:link,\na:active {\n  text-decoration: none;\n}\na:link,\na:visited {\n  color: black;\n}\na:hover {\n  color: #808080;\n}\na:active {\n  color: #696969;\n}\n.container {\n  position: relative;\n  background-color: white;\n  min-height: 100%;\n  width: 80%;\n  margin: auto;\n}\n.container .content {\n  padding-bottom: 30px;\n  overflow: auto;\n}\n.container .content .news-menu {\n  width: 26%;\n  padding: 2%;\n  display: inline-block;\n}\n.container .content .all-news {\n  display: inline-block;\n  width: 66%;\n  padding: 2%;\n}\n.container .content .all-news .news {\n  overflow: auto;\n  padding-bottom: 4%;\n}\n.container .content .all-news .news .image {\n  margin-top: 1%;\n}\n.container .content .all-news .news .image img {\n  width: 100%;\n}\n.container .content .all-news .news .description {\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.container .footer {\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  height: 30px;\n  text-align: center;\n  font-family: cursive, verdana;\n  color: #696969;\n  background: #C0C0C0;\n  background: linear-gradient(to bottom, #FFFFFF, #C0C0C0);\n}\n@media only screen and (max-width: 400px) {\n  .container {\n    width: 100%;\n  }\n  .container .content .news-menu,\n  .container .content .all-news {\n    width: 96%;\n  }\n}\n@media only screen and (min-width: 401px) and (max-width: 800px) {\n  .container .content .news-menu,\n  .container .content .all-news {\n    width: 96%;\n  }\n}\n@media only screen and (min-width: 801px) {\n  .container .content .news-menu {\n    float: left;\n  }\n  .container .button {\n    float: right;\n    width: 30%;\n  }\n}\n@media only screen and (max-width: 550px) {\n  .container .content .all-news .news .image {\n    width: 100%;\n    margin-right: 0;\n  }\n}\n@media only screen and (min-width: 551px) {\n  .container .content .all-news .news .image {\n    width: 36%;\n    margin-right: 2%;\n    float: left;\n  }\n}\n#nav > a {\n  display: none;\n}\n@media only screen and (max-width: 800px) {\n  #bigCategoryHeader {\n    display: none;\n  }\n  h2 {\n    margin-bottom: 0;\n    text-align: left;\n  }\n  #nav {\n    position: relative;\n  }\n  #nav:not(:target) > a:first-of-type,\n  #nav:target > a:last-of-type {\n    display: block;\n  }\n  #nav > ul {\n    height: auto;\n    display: none;\n    position: absolute;\n    left: 0;\n    right: 0;\n    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);\n  }\n  #nav:target > ul {\n    display: block;\n    background-color: #C0C0C0;\n  }\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function () {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for (var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if (item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function (modules, mediaQuery) {
+			if (typeof modules === "string") modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for (var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if (typeof id === "number") alreadyImportedModules[id] = true;
+			}
+			for (i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if (mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if (mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -128,54 +534,35 @@ var newsApp =
 	}();
 
 /***/ },
-/* 3 */
-/***/ function(module, exports) {
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.CategoriesPresenter = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _templateLoader = __webpack_require__(8);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Presenter = exports.Presenter = function () {
-	    function Presenter() {
-	        _classCallCheck(this, Presenter);
+	var CategoriesPresenter = exports.CategoriesPresenter = function () {
+	    function CategoriesPresenter() {
+	        _classCallCheck(this, CategoriesPresenter);
 	    }
 
-	    _createClass(Presenter, [{
-	        key: 'getHtmlTemplate',
-	        value: function getHtmlTemplate(path) {
-	            return fetch(path).then(function (response) {
-	                return response.text();
-	            }).catch(function (error) {
-	                return console.log('error: ' + error);
-	            });
-	        }
-	    }, {
+	    _createClass(CategoriesPresenter, [{
 	        key: 'showCategory',
 	        value: function showCategory(category, parent) {
-	            this.getHtmlTemplate('templates/category.html').then(function (data) {
+	            var loader = new _templateLoader.TemplateLoader();
+	            loader.getHtmlTemplate('templates/category.html').then(function (data) {
 	                var li = document.createElement('li');
 	                li.innerHTML = data.replace(/CATEGORY_ID/, category.id).replace(/CATEGORY_NAME/g, category.name);
 	                parent.appendChild(li);
-	            });
-	        }
-	    }, {
-	        key: 'showNews',
-	        value: function showNews(news, parent) {
-	            var description = news.description ? news.description : '';
-	            var author = news.author ? 'Author: ' + news.author : '';
-	            var publishedAt = news.publishedAt ? 'Published at: ' + news.publishedAt : '';
-
-	            this.getHtmlTemplate('templates/news.html').then(function (data) {
-	                var div = document.createElement('div');
-	                div.className = 'news';
-	                div.innerHTML = data.replace(/NEWS_URL/, news.url).replace(/NEWS_TITLE/, news.title).replace(/NEWS_AUTHOR/, author).replace(/NEWS_PUBLISHEDAT/, publishedAt).replace(/NEWS_URLTOIMAGE/, news.urlToImage).replace(/NEWS_DESCRIPTION/, description);
-	                parent.appendChild(div);
 	            });
 	        }
 	    }, {
@@ -208,44 +595,42 @@ var newsApp =
 	                }
 	            }
 	        }
-	    }, {
-	        key: 'showAllNews',
-	        value: function showAllNews(news, header) {
-	            var _this = this;
+	    }]);
 
-	            this.getHtmlTemplate('templates/newsHeader.html').then(function (data) {
-	                var allNews = document.getElementById('allNews');
-	                allNews.innerHTML = data.replace(/NEWS_HEADER/, header);
+	    return CategoriesPresenter;
+	}();
 
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
 
-	                try {
-	                    for (var _iterator2 = news.articles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var item = _step2.value;
+	'use strict';
 
-	                        _this.showNews(item, allNews);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
-	                }
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var TemplateLoader = exports.TemplateLoader = function () {
+	    function TemplateLoader() {
+	        _classCallCheck(this, TemplateLoader);
+	    }
+
+	    _createClass(TemplateLoader, [{
+	        key: 'getHtmlTemplate',
+	        value: function getHtmlTemplate(path) {
+	            return fetch(path).then(function (response) {
+	                return response.text();
+	            }).catch(function (error) {
+	                return console.log('error: ' + error);
 	            });
 	        }
 	    }]);
 
-	    return Presenter;
+	    return TemplateLoader;
 	}();
 
 /***/ }
