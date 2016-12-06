@@ -1,0 +1,29 @@
+{
+  "name": "task3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/site.js",
+  "scripts": {
+    "build": "webpack --config ./webpack.production.config.js",
+    "build-debug": "webpack --config ./webpack.debug.config.js",
+    "start-server": "webpack-dev-server --config ./webpack.production.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.8",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "css-loader": "^0.26.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "stats-webpack-plugin": "^0.4.2"
+  }
+}
