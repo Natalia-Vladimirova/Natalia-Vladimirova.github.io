@@ -46,11 +46,11 @@ Avaliable commands for CRUD.bat:
 4. delete
 
 Usage of CRUD.bat:  
-crud <command> <db_user> <db_password> (ex.: crud read user1 password1)
+crud \<command\> \<db_user\> \<db_password\> (ex.: crud read user1 password1)
   
 Command for creating a dump:
   
-db_dump <db_user> <db_password>
+db_dump \<db_user\> \<db_password\>
 
 For calculating the class with the best average student performance run the next command (you should restore a collection; see link in the 4th point):  
 calc
