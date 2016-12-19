@@ -1,1 +1,1 @@
-mongo < ./class_performance_task/calc_performance.js
+mongo ds139448.mlab.com:39448/grades_db -u %1 -p %2 < ./class_performance_task/calc_performance.js

@@ -1,5 +1,3 @@
-use GradesDB
-
 db.grades.aggregate([ 
 	{ $unwind: "$scores" },
 	{ $match: { "scores.type": { $ne: "quiz" } } },
