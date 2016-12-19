@@ -52,5 +52,5 @@ Command for creating a dump:
   
 db_dump \<db_user\> \<db_password\>
 
-For calculating the class with the best average student performance run the next command (you should restore a collection; see link in the 4th point):  
+For calculating the class with the best average student performance run the next command:  
 calc \<db_user\> \<db_password\>
