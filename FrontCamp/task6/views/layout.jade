@@ -9,10 +9,15 @@ html
 	body
 		.container
 			.header
-				h1 Blog
+				h1 
+					a(href='/') Blog
 				.menu-buttons
-					a.button(href='/articles') Get all articles
-					a.button(href='/articles/create') Create an article
+					if auth
+						a.button(href='/auth/logout') Logout
+						a.button(href='/secure/articles/create') Create an article
+					else
+						a.button(href='/auth/register') Register
+						a.button(href='/auth/login') Login
 			.content
 				block content
 			p.footer Powered by NV

@@ -1,5 +1,8 @@
 {
 	"mongoose": {
 		"uri": "mongodb://test:test@ds145118.mlab.com:45118/article_blog_db"
+	},
+	"auth": {
+		"secret": "SECRET"
 	}
 }

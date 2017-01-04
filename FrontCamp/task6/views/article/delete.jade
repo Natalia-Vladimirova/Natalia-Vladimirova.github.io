@@ -4,11 +4,11 @@ block styles
 	link(rel='stylesheet', type='text/css', href='/stylesheets/article/delete.css')
 
 block content
-	form.details(method='post', action='/articles/delete')
+	form.details(method='post', action='/secure/articles/delete')
 		.question
 			h3 Are you sure you want to delete the article?
 			input.button(type='submit', value='Delete')
-			a.button(href='/articles') Cancel
+			a.button(href='/secure/articles') Cancel
 		input(type='hidden', name='id', value='#{article._id}')
 		input(type='hidden', name='image', value='#{article.image}')
 		h2 #{article.title}

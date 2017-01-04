@@ -14,4 +14,7 @@ Commands that were used:
 + npm install
 + npm install mongoose --save
 + npm install nconf --save
++ npm install passport --save
++ npm install passport-local --save
++ npm install express-session --save
 + npm start

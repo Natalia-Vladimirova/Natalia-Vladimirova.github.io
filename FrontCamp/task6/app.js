@@ -1,16 +1,23 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var less = require('less-middleware');
-var multer  = require('multer');
+let express = require('express');
+let session = require('express-session');
+let path = require('path');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let less = require('less-middleware');
+let multer  = require('multer');
+let config = require('./config/index');
+let mustAuthenticatedMw = require('./middlewares/must-authenticated');
+let passport = require('./helpers/passport-helper');
 
-var index = require('./routes/index');
-var articles = require('./routes/articles');
+require('./helpers/mongoose-helper')();
 
-var app = express();
+let index = require('./routes/index');
+let articles = require('./routes/articles');
+let auth = require('./routes/auth');
+
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +28,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: config.get('auth:secret') }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(less(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,8 +42,13 @@ app.use(multer({
     }
 }).single('image'));
 
+app.all('/secure/articles/create', mustAuthenticatedMw);
+app.all('/secure/articles/update', mustAuthenticatedMw);
+app.all('/secure/articles/delete', mustAuthenticatedMw);
+
 app.use('/', index);
-app.use('/articles', articles);
+app.use('/secure/articles', articles);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

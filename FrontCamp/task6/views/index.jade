@@ -9,11 +9,11 @@ block content
 			each item in articles
 				.article
 					h3 
-						a(href='/articles/#{item._id}') #{item.title}
+						a(href='/secure/articles/#{item._id}') #{item.title}
 					h6
-						a(href='/articles/update/#{item._id}') Edit
+						a(href='/secure/articles/update/#{item._id}') Edit
 						i  |  
-						a(href='/articles/delete/#{item._id}') Delete
+						a(href='/secure/articles/delete/#{item._id}') Delete
 					h5 #{item.date}
 					.image
 						img(src='/images/#{item.image}', alt='no picture')

@@ -1,0 +1,17 @@
+extends layout
+
+block styles
+	link(rel='stylesheet', type='text/css', href='/stylesheets/article/create.css')
+
+block content
+	h2 #{message}
+	form(method='post', action='/auth/#{auth_type}')
+		input(type='hidden', name='returnUrl', value='#{returnUrl}')
+		.create-line
+			label(for='username') Name
+			input(name='username', type='text')
+		.create-line
+			label(for='password') Password
+			input(name='password', type='password')
+		.create-line
+			input(type='submit', value='Login')

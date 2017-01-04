@@ -7,19 +7,30 @@ class ArticleController {
 	
 	getAll(req, res) {
 		this.articleService.getAll().then(articles => {
-			res.render('index', { title: 'Blog', articles: articles });
+			res.render('index', { 
+				title: 'Blog', 
+				auth: req.isAuthenticated(),
+				articles: articles 
+			});
 		});
 	}
 
 	get(req, res) {
 		let id = req.params.id;
 		this.articleService.get(id).then(article => {
-			res.render('article/read', { title: 'Details', article: article });
+			res.render('article/read', { 
+				title: 'Details', 
+				auth: req.isAuthenticated(),
+				article: article 
+			});
 		});
 	}
 
 	create(req, res) {
-		res.render('article/create', { title: 'Create' });
+		res.render('article/create', { 
+			title: 'Create',
+			auth: req.isAuthenticated()
+		});
 	}
 
 	createPost(req, res) {
@@ -29,14 +40,18 @@ class ArticleController {
 			text: req.body.text
 		};
 		this.articleService.create(article).then(() => {
-			res.redirect('/articles');
+			res.redirect('/secure/articles');
 		});
 	}
 
 	update(req, res) {
 		let id = req.params.id;
 		this.articleService.get(id).then(article => {
-			res.render('article/update', { title: 'Update', article: article });
+			res.render('article/update', { 
+				title: 'Update', 
+				auth: req.isAuthenticated(),
+				article: article 
+			});
 		});
 	}
 
@@ -48,20 +63,24 @@ class ArticleController {
 			text: req.body.text
 		};
 		this.articleService.update(article).then(() => {
-			res.redirect('/articles');
+			res.redirect('/secure/articles');
 		});
 	}
 	
 	delete(req, res) {
 		let id = req.params.id;
 		this.articleService.get(id).then(article => {
-			res.render('article/delete', { title: 'Delete', article: article });
+			res.render('article/delete', { 
+				title: 'Delete', 
+				auth: req.isAuthenticated(), 
+				article: article 
+			});
 		});
 	}
 
 	deletePost(req, res) {
 		this.articleService.delete(req.body.id).then(() => {
-			res.redirect('/articles');
+			res.redirect('/secure/articles');
 		});
 	}
 }

@@ -6,8 +6,8 @@ block styles
 block content
 	h2 Update the article
 	h5
-		a(href='/articles') Back to all articles
-	form.details(method='post', action='/articles/update', enctype='multipart/form-data')
+		a(href='/secure/articles') Back to all articles
+	form.details(method='post', action='/secure/articles/update', enctype='multipart/form-data')
 		.description
 			input(type='hidden', name='id', value='#{article._id}')
 			input(type='hidden', name='currentImage', value='#{article.image}')
