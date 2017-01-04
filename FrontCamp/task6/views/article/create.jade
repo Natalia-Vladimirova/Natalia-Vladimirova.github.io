@@ -1,0 +1,21 @@
+extends ../layout
+
+block styles
+	link(rel='stylesheet', type='text/css', href='/stylesheets/article/create.css')
+
+block content
+	h2 Create an article
+	h5
+		a(href='/articles') Back to all articles
+	form(method='post', action='/articles/create', enctype='multipart/form-data')
+		.create-line
+			label(for='title') Title
+			input#title(name='title', type='text')
+		.create-line
+			label(for='image') Image
+			input#image(name='image', type='file')
+		.create-line
+			label(for='text') Text
+			textarea#text(name='text')
+		.create-line
+			input(type='submit', value='Create')

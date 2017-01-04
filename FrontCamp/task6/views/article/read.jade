@@ -1,0 +1,18 @@
+extends ../layout
+
+block styles
+	link(rel='stylesheet', type='text/css', href='/stylesheets/article/read.css')
+
+block content
+	h3 Details
+	h5
+		a(href='/articles') Back to all articles
+	.details
+		h2 #{article.title}
+		.description
+			.read-line
+				h6 Creation date:
+				p #{article.date}
+			p.read-line #{article.text}
+		.image
+			img(src='/images/#{article.image}', alt='no picture')

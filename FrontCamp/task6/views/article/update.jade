@@ -1,0 +1,26 @@
+extends ../layout
+
+block styles
+	link(rel='stylesheet', type='text/css', href='/stylesheets/article/update.css')
+
+block content
+	h2 Update the article
+	h5
+		a(href='/articles') Back to all articles
+	form.details(method='post', action='/articles/update', enctype='multipart/form-data')
+		.description
+			input(type='hidden', name='id', value='#{article._id}')
+			input(type='hidden', name='currentImage', value='#{article.image}')
+			.update-line
+				label(for='title') Title
+				input#title(name='title', type='text', value='#{article.title}')
+			.update-line
+				label(for='image') New image
+				input#image(name='image', type='file')
+			.update-line
+				label(for='text') Text
+				textarea#text(name='text') #{article.text}
+			.update-line
+				input(type='submit', value='Update')
+		.image
+			img(src='/images/#{article.image}', alt='no picture')
