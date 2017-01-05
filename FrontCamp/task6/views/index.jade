@@ -10,10 +10,11 @@ block content
 				.article
 					h3 
 						a(href='/secure/articles/#{item._id}') #{item.title}
-					h6
-						a(href='/secure/articles/update/#{item._id}') Edit
-						i  |  
-						a(href='/secure/articles/delete/#{item._id}') Delete
+					if userArticles
+						h6
+							a(href='/secure/articles/update/#{item._id}') Edit
+							i  |  
+							a(href='/secure/articles/delete/#{item._id}') Delete
 					h5 #{item.date}
 					.image
 						img(src='/images/#{item.image}', alt='no picture')

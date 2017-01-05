@@ -13,6 +13,7 @@ Commands that were used:
 + express -c less
 + npm install
 + npm install mongoose --save
++ npm install mongoose-unique-validator --save
 + npm install nconf --save
 + npm install passport --save
 + npm install passport-local --save

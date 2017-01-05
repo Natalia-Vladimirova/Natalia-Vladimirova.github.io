@@ -44,7 +44,10 @@ app.use(multer({
 
 app.all('/secure/articles/create', mustAuthenticatedMw);
 app.all('/secure/articles/update', mustAuthenticatedMw);
+app.all('/secure/articles/update/*', mustAuthenticatedMw);
 app.all('/secure/articles/delete', mustAuthenticatedMw);
+app.all('/secure/articles/delete/*', mustAuthenticatedMw);
+app.all('/secure/articles/get-user-articles', mustAuthenticatedMw);
 
 app.use('/', index);
 app.use('/secure/articles', articles);

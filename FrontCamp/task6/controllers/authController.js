@@ -27,6 +27,14 @@ class AuthController {
 				
 				return res.redirect('/secure/articles');
 			});
+		}).catch(error => {
+			res.render('auth_form', { 
+				title: 'Register', 
+				auth_type: 'register', 
+				message: 'Register your account',
+				username: req.body.username,
+				error_message: error.errors.username || error.errors.password
+			});
 		});
 	}
 	
@@ -45,7 +53,14 @@ class AuthController {
 				return next(err);
 			}
 			if (!user) {
-				return res.render('fail');
+				return res.render('auth_form', {
+					title: 'Login',
+					auth_type: 'login',
+					message: 'Login to your account',
+					returnUrl: req.body.returnUrl,
+					username: req.body.username,
+					error_message: info.message
+				});
 			}
 			
 			return req.logIn(user, function(err) {

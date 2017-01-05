@@ -2,11 +2,14 @@ extends ../layout
 
 block styles
 	link(rel='stylesheet', type='text/css', href='/stylesheets/article/update.css')
+	link(rel='stylesheet', type='text/css', href='/stylesheets/validate.css')
 
 block content
 	h2 Update the article
 	h5
-		a(href='/secure/articles') Back to all articles
+		a(href='/secure/articles/get-user-articles') Back to my articles
+	if error_message
+		h3 #{error_message}
 	form.details(method='post', action='/secure/articles/update', enctype='multipart/form-data')
 		.description
 			input(type='hidden', name='id', value='#{article._id}')

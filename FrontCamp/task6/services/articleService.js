@@ -7,6 +7,12 @@ class ArticleService {
 		return Article.find({}).exec();
 	}
 
+	getUserArticles(user_id) {
+		return Article.find({
+			user_id: user_id
+		}).exec();
+	}
+
 	get(id) {
 		return Article.findOne({
 			_id: id
@@ -17,7 +23,8 @@ class ArticleService {
 		let newArticle = new Article({
 			title: article.title,
 			image: article.image,
-			text: article.text
+			text: article.text,
+			user_id: article.user_id
 		});
 		return newArticle.save();
 	}

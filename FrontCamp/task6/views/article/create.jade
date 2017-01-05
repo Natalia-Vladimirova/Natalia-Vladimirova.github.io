@@ -2,20 +2,23 @@ extends ../layout
 
 block styles
 	link(rel='stylesheet', type='text/css', href='/stylesheets/article/create.css')
+	link(rel='stylesheet', type='text/css', href='/stylesheets/validate.css')
 
 block content
 	h2 Create an article
 	h5
-		a(href='/secure/articles') Back to all articles
+		a(href='/secure/articles/get-user-articles') Back to my articles
+	if error_message
+		h3 #{error_message}
 	form(method='post', action='/secure/articles/create', enctype='multipart/form-data')
 		.create-line
 			label(for='title') Title
-			input#title(name='title', type='text')
+			input#title(name='title', type='text', value='#{article ? article.title : ""}')
 		.create-line
 			label(for='image') Image
 			input#image(name='image', type='file')
 		.create-line
 			label(for='text') Text
-			textarea#text(name='text')
+			textarea#text(name='text', value='#{article ? article.text : ""}')
 		.create-line
 			input(type='submit', value='Create')

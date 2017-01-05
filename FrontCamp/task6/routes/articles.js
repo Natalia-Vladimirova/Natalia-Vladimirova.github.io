@@ -32,6 +32,10 @@ router.get('/', function(req, res, next) {
 	articleController.getAll(req, res);
 });
 
+router.get('/get-user-articles', function(req, res, next) {
+	articleController.getUserArticles(req, res);
+});
+
 router.get('/:id', function(req, res, next) {
 	articleController.get(req, res);
 });
