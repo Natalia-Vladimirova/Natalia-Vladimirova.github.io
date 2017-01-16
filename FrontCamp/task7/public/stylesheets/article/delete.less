@@ -1,0 +1,105 @@
+h3 {
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.details {
+  overflow: auto;
+  padding: 2%;
+
+  .question {
+    overflow: auto;
+    margin-bottom: 10px;
+
+    .button {
+      display: inline-block;
+      width: 20%;
+      padding: 0.5%;
+      margin-right: 2%;
+      font-size: 16px;
+      font-family: times;
+      font-weight: normal;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #C0C0C0;
+      line-height: 1.4;
+      vertical-align: middle;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  h2 {
+    padding-bottom: 2%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .description {
+    display: inline-block;
+
+    .read-line {
+      overflow: auto;
+
+      h6 {
+        display: inline-block;
+        width: 49%;
+        padding-right: 2%;
+        text-align: left;
+        float: left;
+        font-size: 14px;
+      }
+      p {
+        display: inline-block;
+        width: 49%;
+        vertical-align: top;
+        font-size: 14px;
+      }
+    }
+    p.read-line {
+      font-size: 20px;
+      margin-top: 2%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  .image {
+    display: inline-block;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 651px) {
+  .details {
+    .description {
+      float: left;
+      width: 48%;
+      padding-right: 2%;
+    }
+    .image {
+      width: 50%;
+    }
+  }
+}
+@media only screen and (max-width: 650px) {
+  .details {
+    .question {
+      .button {
+        width: 30%;
+      }
+    }
+    .description {
+      width: 100%;
+      margin-bottom: 2%;
+    }
+    .image {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+.all-articles {
+	.article {
+		overflow: auto;
+		padding-bottom: 4%;
+
+		.image {
+			img {
+				width: 100%;
+			}
+		}
+		.description {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+}
+
+@media only screen and (max-width: 550px) {
+	.all-articles {
+		.article {
+			.image {
+				width: 100%;
+				margin-right: 0;
+			}
+			p {
+				&.description {
+					padding-bottom: 10%;
+				}
+			}
+		}
+	}
+}
+@media only screen and (min-width: 551px) {
+    .all-articles {
+        .article {
+			.image {
+				width: 36%;
+				margin-right: 2%;
+				float: left;
+			}
+        }
+    }
+}

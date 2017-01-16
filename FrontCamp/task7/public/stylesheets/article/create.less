@@ -1,0 +1,62 @@
+h2 {
+  text-align: left;
+  margin-bottom: 5px;
+}
+h5 {
+  margin-bottom: 10px;
+}
+
+.create-line {
+  overflow:hidden;
+  font-size:20px;
+
+  label {
+    display: inline-block;
+    width: 10%;
+    padding: 2%;
+    float: left;
+  }
+  input, textarea {
+    display: inline-block;
+    width: 55%;
+    margin: 1%;
+    padding: 1%;
+	font-family: times, verdana;
+	font-size: 16px;
+    border: 1px solid #C0C0C0;
+    border-radius: 7px;
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.075);
+  }
+  textarea {
+    height: 120px;
+  }
+  input[type='submit'] {
+    margin-left: 15%;
+    width:57%;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 2px #C0C0C0;
+    }
+  }
+}
+@media only screen and (min-width: 401px) and (max-width: 800px) {
+  .create-line {
+    label {
+      width: 20%;
+    }
+    input[type='submit'] {
+      margin-left: 25%;
+    }
+  }
+}
+@media only screen and (max-width: 400px) {
+  .create-line {
+    label {
+      width: 30%;
+    }
+    input[type='submit'] {
+      margin-left: 35%;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+h2 {
+  text-align: left;
+  margin-bottom: 5px;
+}
+h5 {
+  margin-bottom: 10px;
+}
+
+.details {
+  overflow: auto;
+  padding: 2%;
+
+  .description {
+    display: inline-block;
+    overflow: auto;
+    margin-bottom: 10px;
+
+	.update-line {
+		overflow:hidden;
+		font-size:20px;
+
+		label {
+			display: inline-block;
+			width: 25%;
+			padding: 2%;
+			float: left;
+		}
+		input, textarea {
+			display: inline-block;
+			width: 65%;
+			margin: 1%;
+			padding: 1%;
+			font-family: times, verdana;
+			font-size: 16px;
+			border: 1px solid #C0C0C0;
+			border-radius: 7px;
+			box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.075);
+		}
+		textarea {
+			height: 120px;
+		}
+		input[type='submit'] {
+			margin-left: 30%;
+			width: 67%;
+			cursor: pointer;
+
+			&:hover {
+			  box-shadow: 0 0 2px #C0C0C0;
+			}
+		}
+	}
+  }
+  .image {
+	display: inline-block;
+    img {
+		width: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 651px) {
+  .details {
+    .description {
+      float: left;
+      width: 58%;
+      padding-right: 2%;
+    }
+    .image {
+      width: 40%;
+    }
+  }
+}
+@media only screen and (max-width: 650px) {
+  .details {
+    .description {
+      width: 100%;
+      margin-bottom: 2%;
+    }
+    .image {
+      width: 100%;
+    }
+  }
+}

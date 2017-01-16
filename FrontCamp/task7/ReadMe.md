@@ -8,3 +8,8 @@
  
 <hr>
  
+Commands that were used:
++ npm install express-react-views --save
++ npm install react --save
++ npm install react-dom --save
++ npm start
