@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start1": "webpack-dev-server --config ./resources/dev.webpack.config.js --port 7500 --quiet",
     "start-debug": "webpack-dev-server --config ./resources/webpack.debug.config.js --port 8000 --quiet",
     "start": "webpack-dev-server --config ./resources/webpack.production.config.js --port 8500 --quiet"
   },
