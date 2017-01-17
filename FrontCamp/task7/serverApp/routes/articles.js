@@ -32,12 +32,20 @@ router.get('/', function(req, res, next) {
 	articleController.getAll(req, res);
 });
 
+router.get('/json', function(req, res, next) {
+	articleController.getAllJson(req, res);
+});
+
 router.get('/get-user-articles', function(req, res, next) {
 	articleController.getUserArticles(req, res);
 });
 
 router.get('/:id', function(req, res, next) {
 	articleController.get(req, res);
+});
+
+router.get('/:id/json', function(req, res, next) {
+	articleController.getJson(req, res);
 });
 
 module.exports = router;

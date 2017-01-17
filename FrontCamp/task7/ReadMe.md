@@ -12,4 +12,7 @@ Commands that were used:
 + npm install express-react-views --save
 + npm install react --save
 + npm install react-dom --save
-+ npm start
++ npm install react-router --save-dev
++ npm install html-webpack-plugin --save-dev
++ npm install json-loader --save-dev
++ npm run start

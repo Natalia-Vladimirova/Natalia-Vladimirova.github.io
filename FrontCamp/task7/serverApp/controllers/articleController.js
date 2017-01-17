@@ -5,6 +5,19 @@ class ArticleController {
 		this.articleService = new ArticleService();
 	}
 	
+	getAllJson(req, res) {
+		this.articleService.getAll().then(articles => {
+			return res.json(articles);
+		});
+	}
+
+	getJson(req, res) {
+		let id = req.params.id;
+		this.articleService.get(id)
+			.then(article => res.json(article))
+			.catch(error => res.json(error));
+	}
+
 	getAll(req, res) {
 		this.articleService.getAll().then(articles => {
 			res.render('index', { 
@@ -18,12 +31,18 @@ class ArticleController {
 	getUserArticles(req, res) {
 		let user_id = req.user._id;
 		this.articleService.getUserArticles(user_id).then(articles => {
-			res.render('index', { 
+			return res.json({ 
 				title: 'Blog', 
 				auth: req.isAuthenticated(),
 				userArticles: true,
 				articles: articles 
 			});
+			/*res.render('index', { 
+				title: 'Blog', 
+				auth: req.isAuthenticated(),
+				userArticles: true,
+				articles: articles 
+			});*/
 		}).catch(error => {
 			res.redirect('/secure/articles');
 		});
