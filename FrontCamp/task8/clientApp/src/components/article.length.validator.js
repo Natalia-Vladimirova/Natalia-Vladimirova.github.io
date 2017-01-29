@@ -17,3 +17,5 @@ function MoreThan () {
 		}
 	}
 }
+
+export default MoreThan;

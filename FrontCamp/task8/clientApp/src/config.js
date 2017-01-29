@@ -6,22 +6,22 @@ function config($routeProvider, $locationProvider) {
 			template: '<articles></articles>'
 		})
 		.when('/article/create', {
-			templateUrl: 'articles/create.html',
+			templateUrl: 'src/articles/create.html',
 			controller: 'CreateController',
 			controllerAs: 'formCtrl'
 		})
 		.when('/article/update/:id', {
-			templateUrl: 'articles/update.html',
+			templateUrl: 'src/articles/update.html',
 			controller: 'UpdateController',
 			controllerAs: 'formCtrl'
 		})
 		.when('/article/delete/:id', {
-			templateUrl: 'articles/delete.html',
+			templateUrl: 'src/articles/delete.html',
 			controller: 'DeleteController',
 			controllerAs: 'formCtrl'
 		})
 		.when('/article/:id', {
-			templateUrl: 'articles/article.html',
+			templateUrl: 'src/articles/article.html',
 			controller: 'ArticleController',
 			controllerAs: 'articleCtrl'
 		})
@@ -31,3 +31,5 @@ function config($routeProvider, $locationProvider) {
 }
 
 config.$inject = ['$routeProvider', '$locationProvider'];
+
+export default config;

@@ -14,3 +14,5 @@ class ArticleController {
 }
 
 ArticleController.$inject = ['articleService', '$location', '$routeParams'];
+
+export default ArticleController;

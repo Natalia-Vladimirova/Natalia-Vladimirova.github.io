@@ -1,6 +1,6 @@
 <h3 class="error" ng-show="error_message">{{error_message}}</h3>
 <h3 class="error" ng-show="articleForm.text.$error.mustBeMoreThan">The minimum length of an article: 20 symbols</h3>
-<form method="post" enctype="multipart/form-data" name="articleForm">
+<form method="post" name="articleForm">
 	<input type="hidden" name='id' ng-model="article.id" value="{{formCtrl.article._id}}" />
 	<div class="create-line">
 		<label for="title">Title</label>

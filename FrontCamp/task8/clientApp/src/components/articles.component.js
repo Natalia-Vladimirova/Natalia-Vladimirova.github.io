@@ -1,5 +1,5 @@
 let ArticlesComponent = {
-	templateUrl: 'components/articles.html',
+	templateUrl: 'src/components/articles.html',
 	controllerAs: 'articlesCtrl',
 	controller: function(articleService) {
 		let ctrl = this;
@@ -15,3 +15,5 @@ let ArticlesComponent = {
 };
 
 ArticlesComponent.$inject = ['articleService'];
+
+export default ArticlesComponent;

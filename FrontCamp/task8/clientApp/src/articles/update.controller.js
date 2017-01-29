@@ -39,3 +39,5 @@ class UpdateController {
 }
 
 UpdateController.$inject = ['articleService', '$location', '$scope', '$routeParams'];
+
+export default UpdateController;

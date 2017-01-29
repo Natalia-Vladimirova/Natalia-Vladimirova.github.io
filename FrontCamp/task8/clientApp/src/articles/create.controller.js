@@ -28,3 +28,5 @@ class CreateController {
 }
 
 CreateController.$inject = ['articleService', '$location', '$scope'];
+
+export default CreateController;

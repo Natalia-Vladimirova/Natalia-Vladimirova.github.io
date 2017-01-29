@@ -1,5 +1,5 @@
 let ButtonComponent = {
-	templateUrl: 'components/button.html',
+	templateUrl: 'src/components/button.html',
 	controller: function($attrs) {
 		this.url = $attrs.url;
 		this.text = $attrs.text;
@@ -7,3 +7,5 @@ let ButtonComponent = {
 };
 
 ButtonComponent.$inject = ['$attrs'];
+
+export default ButtonComponent;

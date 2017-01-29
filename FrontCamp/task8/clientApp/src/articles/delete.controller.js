@@ -27,3 +27,5 @@ class DeleteController {
 }
 
 DeleteController.$inject = ['articleService', '$location', '$routeParams'];
+
+export default DeleteController;

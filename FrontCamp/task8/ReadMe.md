@@ -21,3 +21,18 @@
   1. List of numbers for pagination buttons on should be generated using custom Filter
 
 \* Making  #5 without part (2) can be also considered as "excellent"
+ 
+<hr>
+ 
+Commands that were used:
++ npm install angular --save
++ npm install angular-resource --save
++ npm install angular-route --save
++ npm install babel-preset-es2015 --save-dev
++ npm install html-webpack-plugin --save-dev
++ npm install raw-loader --save-dev
++ npm install style-loader --save-dev
++ npm install css-loader --save-dev
++ npm install less --save-dev
++ npm install less-loader --save-dev
++ npm run start

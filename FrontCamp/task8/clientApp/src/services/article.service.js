@@ -70,3 +70,5 @@ class ArticleService {
 }
 
 ArticleService.$inject = ['$resource', '$http'];
+
+export default ArticleService;
