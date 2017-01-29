@@ -1,0 +1,16 @@
+<h3 class="details">Details</h3>
+<h5><a ng-href="#/">Back to all articles</a></h5>
+<div class="details">
+  <h2>{{articleCtrl.article.title}}</h2>
+  <div class="description">
+	<div class="read-line">
+      <h6>Author:</h6>
+      <p>{{articleCtrl.article.author}}</p>
+    </div>
+    <div class="read-line">
+      <h6>Creation date:</h6>
+      <p>{{articleCtrl.article.date | date: 'medium'}}</p>
+    </div>
+    <p class="read-line">{{articleCtrl.article.text}}</p>
+  </div>
+</div>

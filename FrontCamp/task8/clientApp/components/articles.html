@@ -1,0 +1,16 @@
+<div id="allArticles" class="all-articles">
+	<p>Amount of articles: {{articlesCtrl.count}}</p>
+	<div ng-if="articlesCtrl.articles !== undefined">
+		<div ng-repeat="item in articlesCtrl.articles" class="article">
+			<h3><a ng-href="#/article/{{item._id}}">{{item.title}}</a></h3>
+			<h6>
+				<a ng-href="#/article/update/{{item._id}}">Edit</a>
+				<i> | </i>
+				<a ng-href="#/article/delete/{{item._id}}">Delete</a>
+			</h6>
+			<h5>{{item.date | date: 'medium'}}</h5>
+			<h5>{{item.author}}</h5>
+			<p class="description">{{item.text}}</p>
+		</div>
+	</div>
+</div>

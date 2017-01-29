@@ -1,0 +1,23 @@
+.all-articles {
+	.article {
+		overflow: auto;
+		padding-bottom: 4%;
+
+		.description {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+}
+
+@media only screen and (max-width: 550px) {
+	.all-articles {
+		.article {
+			p {
+				&.description {
+					padding-bottom: 10%;
+				}
+			}
+		}
+	}
+}
