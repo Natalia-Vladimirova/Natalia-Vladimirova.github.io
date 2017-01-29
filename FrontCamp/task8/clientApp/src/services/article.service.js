@@ -14,11 +14,6 @@ class ArticleService {
 	}
 
 	get(id) {
-		/*let url = 'http://localhost:3000/articles/:id/json';
-		let articleResource = this.$resource(url, { id: '@id' });
-		let article = articleResource.get({ id: id });
-		console.log(article);*/
-		
 		let url = `http://localhost:3000/articles/${id}/json`;
 		
 		return this.$http({
