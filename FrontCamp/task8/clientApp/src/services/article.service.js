@@ -1,71 +1,54 @@
 class ArticleService {
-	constructor($resource, $http, Upload) {
+	constructor($resource) {
 		this.$resource = $resource;
-		this.$http = $http;
-		this.uploader = Upload;
+		let url = 'http://localhost:3000/articles/:id';
+		this.articleResource = $resource(url, { id: '@id' }, {
+			create: {
+				method: "POST",
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			},
+			update: {
+				method: "PUT",
+				transformRequest: angular.identity,
+				headers: { 'Content-Type': undefined }
+			}
+		});
 	}
 	
 	getAll() {
-		let url = 'http://localhost:3000/articles/json';
-		
-		return this.$http({
-			method: 'GET',
-			url: url
-		});
+		return this.articleResource.query().$promise;
 	}
 
 	get(id) {
-		let url = `http://localhost:3000/articles/${id}/json`;
-		
-		return this.$http({
-			method: 'GET',
-			url: url
-		});
+		return this.articleResource.get({ id: id }).$promise;
 	}
 
 	create(article, file) {
-		let url = 'http://localhost:3000/articles/create/json';
+		let fd = new FormData();
+		fd.append('title', article.title);
+		fd.append('text', article.text);
+		fd.append('image', file);
 		
-		return this.uploader.upload({
-			method: 'POST',
-            url: url,
-            data: {
-				title: article.title,
-				text: article.text,
-				image: file
-			}
-        });
+		return this.articleResource.create({}, fd).$promise;
 	}
 
 	update(article, file) {
-		let url = 'http://localhost:3000/articles/update/json';
+		let fd = new FormData();
+		fd.append('id', article._id);
+		fd.append('title', article.title);
+		fd.append('text', article.text);
+		fd.append('currentImage', article.image);
+		fd.append('image', file);
 		
-		return this.uploader.upload({
-			method: 'POST',
-			url: url,
-			data: {
-				id: article._id, 
-				title: article.title, 
-				text: article.text,
-				currentImage: article.image,
-				image: file
-			}
-		});
+		return this.articleResource.update({}, fd).$promise;
 	}
 
 	delete(id) {
-		let url = 'http://localhost:3000/articles/delete/json';
-		
-		return this.$http({
-			method: 'POST',
-			url: url,
-			data: {
-				id: id
-			}
-		});
+		return this.articleResource.delete({ id: id }).$promise;
 	}
 }
 
-ArticleService.$inject = ['$resource', '$http', 'Upload'];
+ArticleService.$inject = ['$resource'];
 
 export default ArticleService;

@@ -44,7 +44,7 @@ class ArticleController {
 	}
 	
 	delete(req, res) {
-		this.articleService.delete(req.body.id)
+		this.articleService.delete(req.params.id)
 			.then(() => res.json({}))
 			.catch(error => res.json(error));
 	}

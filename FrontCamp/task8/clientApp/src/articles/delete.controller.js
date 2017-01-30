@@ -7,8 +7,8 @@ class DeleteController {
 		let id = $routeParams.id;
 		
 		articleService.get(id)
-			.then(response => {
-				ctrl.article = response.data;
+			.then(data => {
+				ctrl.article = data;
 			})
 			.catch(error => {
 				$location.path('/');

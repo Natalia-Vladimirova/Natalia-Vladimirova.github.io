@@ -5,9 +5,9 @@ let ArticlesComponent = {
 		let ctrl = this;
 		
 		articleService.getAll()
-			.then(response => {
-				ctrl.articles = response.data;
-				ctrl.count = response.data.length;
+			.then(data => {
+				ctrl.articles = data;
+				ctrl.count = data.length;
 			})
 			.catch(error => { });
 	}

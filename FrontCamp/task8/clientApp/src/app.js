@@ -1,7 +1,6 @@
 import angular from 'angular';
 import ngRoute from 'angular-route';
 import ngResource from 'angular-resource';
-import ngFileUpload from 'ng-file-upload';
 
 import config from './config';
 
@@ -24,7 +23,7 @@ import '../styles/article/create.less';
 import '../styles/article/delete.less';
 
 angular
-	.module('myApp', [ngRoute, ngResource, ngFileUpload])
+	.module('myApp', [ngRoute, ngResource])
 	.config(config)
 	.service('articleService', ArticleService)
 	.controller('ArticleController', ArticleController)

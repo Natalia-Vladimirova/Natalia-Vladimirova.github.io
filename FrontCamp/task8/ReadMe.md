@@ -35,5 +35,4 @@ Commands that were used:
 + npm install css-loader --save-dev
 + npm install less --save-dev
 + npm install less-loader --save-dev
-+ npm install ng-file-upload --save
 + npm run start

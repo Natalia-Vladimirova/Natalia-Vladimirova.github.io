@@ -8,8 +8,8 @@ class UpdateController {
 		let id = $routeParams.id;
 		
 		articleService.get(id)
-			.then(response => {
-				this.ctrl.article = response.data;
+			.then(data => {
+				this.ctrl.article = data;
 			})
 			.catch(error => {
 				$location.path('/');
@@ -22,12 +22,17 @@ class UpdateController {
 			return;
 		}
 		
+		if (this.ctrl.articleForm.$invalid) {
+			this.ctrl.error_message = 'Validation failed';
+			return ;
+		}
+		
 		let file = this.ctrl.articleForm.newImage.$$element[0].files[0];
 
 		this.articleService.update(this.ctrl.article, file)
-			.then(response => {
-				if (response.data.errors) {
-					this.ctrl.error_message = response.data.message;
+			.then(data => {
+				if (data.errors) {
+					this.ctrl.error_message = data.message;
 				}
 				else {
 					this.$location.path('/');

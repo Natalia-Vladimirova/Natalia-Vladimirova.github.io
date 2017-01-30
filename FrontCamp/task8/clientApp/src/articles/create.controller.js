@@ -12,12 +12,17 @@ class CreateController {
 			return;
 		}
 
+		if (this.ctrl.articleForm.$invalid) {
+			this.ctrl.error_message = 'Validation failed';
+			return ;
+		}
+		
 		let file = this.ctrl.articleForm.newImage.$$element[0].files[0];
 
 		this.articleService.create(this.ctrl.article, file)
-			.then(response => {
-				if (response.data.errors) {
-					this.ctrl.error_message = response.data.message;
+			.then(data => {
+				if (data.errors) {
+					this.ctrl.error_message = data.message;
 				}
 				else {
 					this.$location.path('/');
