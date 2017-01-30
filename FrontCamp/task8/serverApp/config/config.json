@@ -1,5 +1,5 @@
 {
 	"mongoose": {
-		"uri": "mongodb://test:test@ds135689.mlab.com:35689/blog_db"
+		"uri": "mongodb://test:test@ds145118.mlab.com:45118/article_blog_db"
 	}
 }

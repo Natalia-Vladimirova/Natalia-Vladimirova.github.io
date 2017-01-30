@@ -6,7 +6,6 @@ let ArticlesComponent = {
 		
 		articleService.getAll()
 			.then(response => {
-				console.log(response.data);
 				ctrl.articles = response.data;
 				ctrl.count = response.data.length;
 			})

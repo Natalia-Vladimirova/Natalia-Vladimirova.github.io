@@ -16,7 +16,7 @@ h5 {
     padding: 2%;
     float: left;
   }
-  input, textarea {
+  input, textarea, .image {
     display: inline-block;
     width: 55%;
     margin: 1%;
@@ -38,6 +38,14 @@ h5 {
     &:hover {
       box-shadow: 0 0 2px #C0C0C0;
     }
+  }
+  .image {
+    img {
+      width: 100%;
+    }
+  }
+  &:last-of-type {
+	margin-bottom: 20px;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 800px) {

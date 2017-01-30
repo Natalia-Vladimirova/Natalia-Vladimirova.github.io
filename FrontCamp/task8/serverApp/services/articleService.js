@@ -17,7 +17,8 @@ class ArticleService {
 		let newArticle = new Article({
 			title: article.title,
 			text: article.text,
-			author: article.author
+			image: article.image,
+			user_id: 'test'
 		});
 		return newArticle.save();
 	}
@@ -26,7 +27,7 @@ class ArticleService {
 		return this.get(article.id).then(item => {
 			item.title = article.title;
 			item.text = article.text;
-			item.author = article.author;
+			item.image = article.image;
 			return item.save();
 		});
 	}

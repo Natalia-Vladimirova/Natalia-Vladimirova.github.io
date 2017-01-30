@@ -1,18 +1,23 @@
 <h3 class="error" ng-show="error_message">{{error_message}}</h3>
 <h3 class="error" ng-show="articleForm.text.$error.mustBeMoreThan">The minimum length of an article: 20 symbols</h3>
-<form method="post" name="articleForm">
-	<input type="hidden" name='id' ng-model="article.id" value="{{formCtrl.article._id}}" />
+<form method="post" name="articleForm" enctype="multipart/form-data">
 	<div class="create-line">
 		<label for="title">Title</label>
-		<input id="title" name="title" ng-model="article.title" type="text" value="{{formCtrl.article.title}}" required />
-	</div>
-	<div class="create-line">
-		<label for="author">Author</label>
-		<input id="author" name="author" ng-model="article.author" type="text" value="{{formCtrl.article.author}}" />
+		<input id="title" name="title" ng-model="article.title" type="text" ng-required="true" />
 	</div>
 	<div class="create-line">
 		<label for="text">Text</label>
-		<textarea id="text" name="text" ng-model="article.text" more-than="20" required>{{formCtrl.article.text}}</textarea>
+		<textarea id="text" name="text" ng-model="article.text" more-than="20" ng-required="true"></textarea>
+	</div>
+	<div class="create-line">
+		<label for="newImage">Image</label>
+		<input type="file" ng-model="newImage" name="newImage" />
+	</div>
+	<div class="create-line" ng-if="article.image">
+		<label for="text">Current image</label>
+		<div class="image">
+			<img ng-src="http://localhost:3000/images/{{article.image}}" alt="no picture" />
+		</div>
 	</div>
 	<div class="create-line">
 		<input type="submit" value="{{formCtrl.buttonValue}}" data-ng-click="formCtrl.submit()" />

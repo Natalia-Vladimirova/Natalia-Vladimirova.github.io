@@ -3,14 +3,13 @@
 <div class="details">
   <h2>{{articleCtrl.article.title}}</h2>
   <div class="description">
-	<div class="read-line">
-      <h6>Author:</h6>
-      <p>{{articleCtrl.article.author}}</p>
-    </div>
     <div class="read-line">
       <h6>Creation date:</h6>
       <p>{{articleCtrl.article.date | date: 'medium'}}</p>
     </div>
     <p class="read-line">{{articleCtrl.article.text}}</p>
+  </div>
+  <div class="image">
+	<img ng-src="http://localhost:3000/images/{{articleCtrl.article.image}}" alt="no picture"/>
   </div>
 </div>

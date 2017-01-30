@@ -11,8 +11,10 @@ class CreateController {
 			this.ctrl.error_message = 'Title and text are required';
 			return;
 		}
-		console.log(this.ctrl.article);
-		this.articleService.create(this.ctrl.article)
+
+		let file = this.ctrl.articleForm.newImage.$$element[0].files[0];
+
+		this.articleService.create(this.ctrl.article, file)
 			.then(response => {
 				if (response.data.errors) {
 					this.ctrl.error_message = response.data.message;

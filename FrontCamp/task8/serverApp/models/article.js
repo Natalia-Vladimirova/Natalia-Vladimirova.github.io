@@ -9,12 +9,16 @@ let articleSchema = new mongoose.Schema({
 		type: String, 
 		required: [true, 'Article text is required.'] 
 	},
-	author: {
+	image: {
 		type: String
 	},
 	date: { 
 		type: Date, 
 		default: Date.now()
+	},
+	user_id: { 
+		type: String, 
+		required: true 
 	}
 });
 

@@ -9,7 +9,7 @@
 				<a ng-href="#/article/delete/{{item._id}}">Delete</a>
 			</h6>
 			<h5>{{item.date | date: 'medium'}}</h5>
-			<h5>{{item.author}}</h5>
+			<div class="image"><img ng-src="http://localhost:3000/images/{{item.image}}" alt="no picture"/></div>
 			<p class="description">{{item.text}}</p>
 		</div>
 	</div>

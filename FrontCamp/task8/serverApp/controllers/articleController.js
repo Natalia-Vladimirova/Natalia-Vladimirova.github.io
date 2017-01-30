@@ -23,7 +23,7 @@ class ArticleController {
 		let article = {
 			title: req.body.title,
 			text: req.body.text,
-			author: req.body.author
+			image: req.file !== undefined ? req.file.filename : null
 		};
 		
 		this.articleService.create(article)
@@ -36,7 +36,7 @@ class ArticleController {
 			id: req.body.id,
 			title: req.body.title,
 			text: req.body.text,
-			author: req.body.author
+			image: req.file !== undefined ? req.file.filename : req.body.currentImage
 		};
 		this.articleService.update(article)
 			.then(() => res.json({}))
