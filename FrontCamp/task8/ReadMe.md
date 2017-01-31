@@ -1,4 +1,4 @@
-﻿##Task 8
+##Task 8
 
 1. Add AngularJS 1.6.1 to a project
 1. Add minimum functionality
@@ -24,7 +24,35 @@
  
 <hr>
  
-Commands that were used:
+##Task 9
+
+0) Setup and configure test running to use your project files:
+
+* add entry point file to load all tests
+* add webpack preprocessor
+  
+  
+Cover your Angular application by Unit tests. There will be tests for the following angular instances from the previous HW:
+
+1) Component for displaying amount of articles
+
+2) Directive with form to add an article
+
+3) Service that make requests to a server
+
+4) Custom filter that generate list of numbers for pagination buttons
+
+ 
+
+5) Finish test running configuration:
+
+* to provide test coverage
+* to support debug mode (add npm scripts to execute debug launch)
+ 
+<hr>
+ 
+Commands that were used:  
+**Task 8**:
 + npm install angular --save
 + npm install angular-resource --save
 + npm install angular-route --save
