@@ -1,5 +1,5 @@
 let ButtonComponent = {
-	templateUrl: 'src/components/button.html',
+	templateUrl: 'app/src/components/button.html',
 	controller: function($attrs) {
 		this.url = $attrs.url;
 		this.text = $attrs.text;

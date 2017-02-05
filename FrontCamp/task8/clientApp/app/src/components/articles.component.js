@@ -1,5 +1,5 @@
 let ArticlesComponent = {
-	templateUrl: 'src/components/articles.html',
+	templateUrl: 'app/src/components/articles.html',
 	controllerAs: 'articlesCtrl',
 	controller: function(articleService) {
 		let ctrl = this;

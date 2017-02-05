@@ -5,7 +5,7 @@ const cwd = process.cwd();
 
 module.exports = {
     output: {
-        path: path.join(cwd, 'dist'),
+        path: path.join(cwd, 'app', 'dist'),
         publicPath: 'http://127.0.0.1:8080/',
         filename: "[name].bundle.js"
     },
@@ -15,7 +15,7 @@ module.exports = {
         modulesDirectories: [cwd, 'node_modules']
     },
     entry: {
-        app: path.join(cwd, './src/app.js')
+        app: path.join(cwd, './app/src/app.js')
     },
     module: {
         loaders: [
@@ -36,8 +36,8 @@ module.exports = {
     },
     plugins: [
 		new HtmlWebpackPlugin({
-		  template: './index.html',
-		  inject: 'body'
+			template: './app/index.html',
+			inject: 'body'
 		})
     ]
 };

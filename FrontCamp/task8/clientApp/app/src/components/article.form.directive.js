@@ -1,6 +1,6 @@
 let ArticleForm = () => {
 	return {
-		templateUrl: 'src/components/article.form.html',
+		templateUrl: 'app/src/components/article.form.html',
 		restrict: 'E'
 	};
 };
