@@ -23,7 +23,7 @@ import '../styles/article/create.less';
 import '../styles/article/delete.less';
 
 angular
-	.module('myApp', [ngRoute, ngResource])
+	.module('app', [ngRoute, ngResource])
 	.config(config)
 	.service('articleService', ArticleService)
 	.controller('ArticleController', ArticleController)
@@ -34,3 +34,5 @@ angular
 	.component('customButton', ButtonComponent)
 	.directive('articleForm', ArticleForm)
 	.directive('moreThan', MoreThan);
+
+export default 'app';

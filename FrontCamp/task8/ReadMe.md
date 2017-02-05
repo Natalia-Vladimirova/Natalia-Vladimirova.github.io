@@ -64,3 +64,15 @@ Commands that were used:
 + npm install less --save-dev
 + npm install less-loader --save-dev
 + npm run start
+
+**Task 9**:
++ npm install –g karma-cli
++ npm install jasmine-core --save-dev
++ npm install karma -–save-dev
++ npm install karma-jasmine -–save-dev
++ npm install karma-phantomjs2-launcher -–save-dev
++ npm install karma-webpack --save-dev
++ npm install isparta --save-dev
++ npm install karma-coverage --save-dev
++ npm install karma-sourcemap-loader --save-dev
++ npm install angular-mocks --save-dev
