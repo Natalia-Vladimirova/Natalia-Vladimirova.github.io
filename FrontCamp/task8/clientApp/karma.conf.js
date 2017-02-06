@@ -26,9 +26,9 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'test/resources/angular.js',
-			'test/resources/angular-mocks.js',
-			'test/index.spec.js'
+			'./app/src/app.js',
+			'./node_modules/angular-mocks/angular-mocks.js',
+			'./test/index.js'
 		],
 
 
@@ -40,24 +40,24 @@ module.exports = function(config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'test/index.spec.js': sourcePreprocessors
+			'app/src/app.js': sourcePreprocessors,
+			'test/index.js': sourcePreprocessors
 		},
 		
 		webpack: {
 			devtool: 'inline-source-map',
 			module: {
-				loaders: [
-					{
+				loaders: [{
 						test: /\.js$/, 
 						loader: 'babel', 
 						exclude: /(\.test.js$|node_modules)/
-					},
-					{
-						test: /\.less$/,
-						loader: 'style!css!less',
-					}
+					}, {
+                        test: /\.less$/,
+                        loader: 'style!css!less',
+                    }
 				]
-			}
+			},
+			noParse: /angular\/angular.js/
 		},
 		
 		// test results reporter to use

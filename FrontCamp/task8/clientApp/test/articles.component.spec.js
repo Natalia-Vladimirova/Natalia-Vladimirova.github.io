@@ -1,42 +1,25 @@
-import ArticlesComponent from '../app/src/components/articles.component';
-
-describe('articles component', function () {
+describe('articles component', function() {
 	let suite;
 
 	angular.mock.module.sharedInjector();
 
-	beforeEach(inject(function ($injector) {
+	beforeAll(function() {
+		angular.mock.module('app');
+	});
+
+	beforeEach(inject(function($injector, $q, _$componentController_) {
 		suite = {};
-		suite.$q = $injector.get('$q');
-		
-		let articlesPromise = suite.$q(function(resolve, reject) {
-					resolve([
-						{
-							title: 'test',
-							text: 'test text'
-						},
-						{
-							title: 'test2',
-							text: 'test text2'
-						}
-					]);
-				});
-		
-		let articleService = {
-            getAll: function() {}
-        };
-        
-		spyOn(articleService, 'getAll').and.returnValue(articlesPromise);
-		
-		suite.articleService = articleService;
+		suite.articleService = $injector.get('articleService');
+		spyOn(suite.articleService, 'getAll').and.returnValue($q.when())
+		suite.$componentController = _$componentController_;
 	}));
 
-	afterEach(function(){
+	afterEach(function() {
 		suite = null;
 	});
 
-	it('should call article service to get all articles', function () {
-		ArticlesComponent.controller(suite.articleService);
+	it('should call article service to get all articles', function() {
+		let ctrl = suite.$componentController('articles', null);
 		expect(suite.articleService.getAll).toHaveBeenCalled();
 	});
 });

@@ -1,108 +1,82 @@
-import ArticleService from '../app/src/services/article.service';
-
-describe('article service', function () {
+describe('article service', function() {
 	let suite;
 	let articles;
+	let $httpBackend;
 
 	angular.mock.module.sharedInjector();
 
-	beforeEach(inject(function ($injector) {
-		suite = {};
-		articles = [
-			{
+	beforeAll(function() {
+		angular.mock.module('app');
+	});
+
+	beforeEach(inject(function($injector) {
+		articles = [{
 				id: 1,
 				title: 'test',
 				text: 'test text'
-			},
-			{
+			}, {
 				id: 2,
 				title: 'test2',
 				text: 'test text2'
 			}
 		];
-		
-		let $q = $injector.get('$q');
-		let promiseAll = $q((resolve, reject) => resolve(articles));
-		let promiseGet = $q((resolve, reject) => resolve(articles[0]));
-		let promiseOther = $q((resolve, reject) => {});
-		
-		let resourceMethods = {
-			query: function() {},
-			get: function() {},
-			create: function() {},
-			update: function() {},
-			delete: function() {}
-		};
-		
-		let $resource = () => { 
-			return resourceMethods;
-		};
 
-		spyOn(resourceMethods, 'query').and.returnValue({$promise: promiseAll});
-		spyOn(resourceMethods, 'get').and.returnValue({$promise: promiseGet});
-		spyOn(resourceMethods, 'create').and.returnValue({$promise: promiseOther});
-		spyOn(resourceMethods, 'update').and.returnValue({$promise: promiseOther});
-		spyOn(resourceMethods, 'delete').and.returnValue({$promise: promiseOther});
-		
-		suite.$resource = $resource;
-		suite.articleService = new ArticleService($resource);
+		suite = {};
+		suite.articleService = $injector.get('articleService');
+
+		spyOn(suite.articleService.articleResource, 'create').and.callThrough();
+		spyOn(suite.articleService.articleResource, 'update').and.callThrough();
+		spyOn(suite.articleService.articleResource, 'delete').and.callThrough();
+
+		$httpBackend = $injector.get('$httpBackend');
+		$httpBackend.when('GET', 'http://localhost:3000/articles').respond(articles);
+		$httpBackend.when('GET', 'http://localhost:3000/articles/1').respond(articles[0]);
+		$httpBackend.when('POST', 'http://localhost:3000/articles').respond();
+		$httpBackend.when('PUT', 'http://localhost:3000/articles').respond();
+		$httpBackend.when('DELETE', 'http://localhost:3000/articles/2').respond();
 	}));
 
-	afterEach(function(){
+	afterEach(function() {
 		suite = null;
+		$httpBackend.verifyNoOutstandingExpectation();
+		$httpBackend.verifyNoOutstandingRequest();
 	});
 
-	it('should call resource to get all articles', function () {
-		let success = jasmine.createSpy('success');
-		
-		suite.articleService.getAll().then(success);
-		expect(suite.$resource().query).toHaveBeenCalled();
-		
-		expect(suite.$resource().get).not.toHaveBeenCalled();
-		expect(suite.$resource().create).not.toHaveBeenCalled();
-		expect(suite.$resource().update).not.toHaveBeenCalled();
-		expect(suite.$resource().delete).not.toHaveBeenCalled();
-		
-		//expect(success).toHaveBeenCalledWith(articles);
+	it('should call resource to get all articles', function() {
+		let result;
+		suite.articleService.getAll().then(function(data) {
+			result = data;
+		});
+		$httpBackend.flush();
+		expect(result[0].id).toEqual(articles[0].id);
+		expect(result[1].id).toEqual(articles[1].id);
+		expect(result.length).toEqual(2);
+	});
+
+	it('should call resource to get one article', function() {
+		let result;
+		suite.articleService.get(articles[0].id).then(function(data) {
+			result = data;
+		});
+		$httpBackend.flush();
+		expect(result.id).toEqual(articles[0].id);
 	});
 	
-	it('should call resource to get one article', function () {
-		suite.articleService.get(1);
-		expect(suite.$resource().get).toHaveBeenCalledWith({ id: 1 });
-		
-		expect(suite.$resource().query).not.toHaveBeenCalled();
-		expect(suite.$resource().create).not.toHaveBeenCalled();
-		expect(suite.$resource().update).not.toHaveBeenCalled();
-		expect(suite.$resource().delete).not.toHaveBeenCalled();
-	});
-	
-	it('should call resource to create an article', function () {
+	it('should call resource to create an article', function() {
 		suite.articleService.create(articles[0]);
-		expect(suite.$resource().create).toHaveBeenCalledWith({}, new FormData());
-		
-		expect(suite.$resource().query).not.toHaveBeenCalled();
-		expect(suite.$resource().get).not.toHaveBeenCalled();
-		expect(suite.$resource().update).not.toHaveBeenCalled();
-		expect(suite.$resource().delete).not.toHaveBeenCalled();
+		$httpBackend.flush();
+		expect(suite.articleService.articleResource.create).toHaveBeenCalledWith({}, new FormData());
 	});
 	
-	it('should call resource to update the article', function () {
+	it('should call resource to update the article', function() {
 		suite.articleService.update(articles[0]);
-		expect(suite.$resource().update).toHaveBeenCalledWith({}, new FormData());
-		
-		expect(suite.$resource().query).not.toHaveBeenCalled();
-		expect(suite.$resource().get).not.toHaveBeenCalled();
-		expect(suite.$resource().create).not.toHaveBeenCalled();
-		expect(suite.$resource().delete).not.toHaveBeenCalled();
+		$httpBackend.flush();
+		expect(suite.articleService.articleResource.update).toHaveBeenCalledWith({}, new FormData());
 	});
 	
-	it('should call resource to delete the article', function () {
-		suite.articleService.delete(2);
-		expect(suite.$resource().delete).toHaveBeenCalledWith({ id: 2 });
-		
-		expect(suite.$resource().query).not.toHaveBeenCalled();
-		expect(suite.$resource().get).not.toHaveBeenCalled();
-		expect(suite.$resource().create).not.toHaveBeenCalled();
-		expect(suite.$resource().update).not.toHaveBeenCalled();
+	it('should call resource to delete the article', function() {
+		suite.articleService.delete(articles[1].id);
+		$httpBackend.flush();
+		expect(suite.articleService.articleResource.delete).toHaveBeenCalledWith({ id: articles[1].id });
 	});
 });
