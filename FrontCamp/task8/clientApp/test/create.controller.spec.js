@@ -19,7 +19,7 @@ describe('create controller', function() {
 		suite = null;
 	});
 
-	it('should call article service to get all articles when creating', function() {
+	it('should have button value when creating', function() {
 		let ctrl = suite.ctrl('CreateController', { $scope: suite.scope });
 		expect(ctrl.buttonValue).toEqual('Create');
 	});

@@ -31,6 +31,7 @@ module.exports = function(config) {
 			'./node_modules/angular-resource/angular-resource.js',
 			'./node_modules/angular-mocks/angular-mocks.js',
 			'./app/src/app.js',
+			'./app/src/**/*.html',
 			'./test/index.js'
 		],
 
@@ -44,6 +45,7 @@ module.exports = function(config) {
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
 			'app/src/app.js': sourcePreprocessors,
+			'app/src/**/*.html': ['ng-html2js'],
 			'test/index.js': ['webpack', 'sourcemap']
 		},
 		
@@ -56,6 +58,10 @@ module.exports = function(config) {
 					exclude: /node_modules/
 				}]
 			}
+		},
+		
+		ngHtml2JsPreprocessor: {
+			moduleName: 'templates' 
 		},
 		
 		// test results reporter to use
