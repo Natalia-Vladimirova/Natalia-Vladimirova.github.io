@@ -1,7 +1,3 @@
-import angular from 'angular';
-import ngRoute from 'angular-route';
-import ngResource from 'angular-resource';
-
 import config from './config';
 
 import ArticleService from './services/article.service';
@@ -23,7 +19,7 @@ import '../styles/article/create.less';
 import '../styles/article/delete.less';
 
 angular
-	.module('app', [ngRoute, ngResource])
+	.module('app', ['ngRoute', 'ngResource'])
 	.config(config)
 	.service('articleService', ArticleService)
 	.controller('ArticleController', ArticleController)

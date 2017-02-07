@@ -15,7 +15,8 @@ module.exports = {
         modulesDirectories: [cwd, 'node_modules']
     },
     entry: {
-        app: path.join(cwd, './app/src/app.js')
+        app: path.join(cwd, './app/src/app.js'),
+		vendor: ["angular", "angular-route", "angular-resource"]
     },
     module: {
         loaders: [

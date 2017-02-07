@@ -26,8 +26,11 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'./app/src/app.js',
+			'./node_modules/angular/angular.js',
+			'./node_modules/angular-route/angular-route.js',
+			'./node_modules/angular-resource/angular-resource.js',
 			'./node_modules/angular-mocks/angular-mocks.js',
+			'./app/src/app.js',
 			'./test/index.js'
 		],
 
@@ -50,14 +53,13 @@ module.exports = function(config) {
 				loaders: [{
 						test: /\.js$/, 
 						loader: 'babel', 
-						exclude: /(\.test.js$|node_modules)/
+						exclude: /node_modules/
 					}, {
-                        test: /\.less$/,
-                        loader: 'style!css!less',
-                    }
+						test: /\.less$/,
+						loader: 'style!css!less',
+					}
 				]
-			},
-			noParse: /angular\/angular.js/
+			}
 		},
 		
 		// test results reporter to use
@@ -110,5 +112,5 @@ module.exports = function(config) {
 		// Concurrency level
 		// how many browser should be started simultaneous
 		concurrency: Infinity
-  })
+	})
 }
