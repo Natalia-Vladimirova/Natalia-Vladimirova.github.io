@@ -1,4 +1,5 @@
 // Karma configuration
+let path = require('path');
 
 module.exports = function(config) {
 	
@@ -56,6 +57,11 @@ module.exports = function(config) {
 					test: /\.js$/, 
 					loader: 'babel', 
 					exclude: /node_modules/
+				}],
+				postLoaders: [{ //delays coverage til after tests are run, fixing transpiled source coverage error
+					test: /\.js$/,
+					include: path.resolve('app/src/'),
+					loader: 'istanbul-instrumenter'
 				}]
 			}
 		},
@@ -67,23 +73,16 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress', 'coverage'],
+		reporters: ['istanbul'],
 
-		coverageReporter: {
-			// specify a common output directory
+		istanbulReporter: {
 			dir: 'coverage',
 			reporters: [
 				{ type: 'html', subdir: '.' },
-				{ type: 'text-summary' }
-			],
-			instrumenters: {
-				isparta : require('isparta')
-			},
-			instrumenter: {
-				'**/*.js': 'isparta'
-			}
+				{ type: 'text' }
+			]
 		},
-
+		
 		// web server port
 		port: 9876,
 
