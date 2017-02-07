@@ -11,13 +11,6 @@ import ButtonComponent from './components/button.component';
 import ArticleForm from './components/article.form.directive';
 import MoreThan from './components/article.length.validator';
 
-import '../styles/app.less';
-import '../styles/validate.less';
-import '../styles/article-list.less';
-import '../styles/article/read.less';
-import '../styles/article/create.less';
-import '../styles/article/delete.less';
-
 angular
 	.module('app', ['ngRoute', 'ngResource'])
 	.config(config)

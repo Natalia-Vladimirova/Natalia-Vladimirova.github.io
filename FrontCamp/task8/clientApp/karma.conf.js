@@ -9,7 +9,7 @@ module.exports = function(config) {
 	}
 	
 	if (process.argv.some(isDebug)) {
-		sourcePreprocessors = ['webpack'];
+		sourcePreprocessors = ['webpack', 'sourcemap'];
 	}
 
 	
@@ -44,21 +44,17 @@ module.exports = function(config) {
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
 			'app/src/app.js': sourcePreprocessors,
-			'test/index.js': sourcePreprocessors
+			'test/index.js': ['webpack', 'sourcemap']
 		},
 		
 		webpack: {
-			devtool: 'inline-source-map',
+			devtool: 'inline',
 			module: {
 				loaders: [{
-						test: /\.js$/, 
-						loader: 'babel', 
-						exclude: /node_modules/
-					}, {
-						test: /\.less$/,
-						loader: 'style!css!less',
-					}
-				]
+					test: /\.js$/, 
+					loader: 'babel', 
+					exclude: /node_modules/
+				}]
 			}
 		},
 		
@@ -71,9 +67,8 @@ module.exports = function(config) {
 			// specify a common output directory
 			dir: 'coverage',
 			reporters: [
-				// reporters not supporting the `file` property
-				{ type: 'html', subdir: 'report-html' },
-				{ type: 'lcov', subdir: 'report-lcov' }
+				{ type: 'html', subdir: '.' },
+				{ type: 'text-summary' }
 			],
 			instrumenters: {
 				isparta : require('isparta')

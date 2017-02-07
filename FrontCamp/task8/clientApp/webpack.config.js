@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
+let ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const cwd = process.cwd();
 
 module.exports = {
@@ -16,7 +17,8 @@ module.exports = {
     },
     entry: {
         app: path.join(cwd, './app/src/app.js'),
-		vendor: ["angular", "angular-route", "angular-resource"]
+		vendor: ["angular", "angular-route", "angular-resource"],
+		styles: path.join(cwd, './app/styles/index.less'),
     },
     module: {
         loaders: [
@@ -27,7 +29,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: 'style!css!less',
+                loader: ExtractTextWebpackPlugin.extract('css!less'),
             },
 			{
 				test: /\.html$/,
@@ -39,6 +41,9 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './app/index.html',
 			inject: 'body'
+		}),
+		new ExtractTextWebpackPlugin('[name].bundle.css', {
+			allChunks: true
 		})
     ]
 };
